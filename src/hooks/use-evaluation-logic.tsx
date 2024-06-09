@@ -20,7 +20,7 @@ export function useEvaluationLogic() {
     UE: "Ü",
     SS: "ß",
   };
-  //if in the step 1 we only need to replace all => replace all with a regex and is ready, we don´t need innecesary code to make it
+  //If we only need to replace all in step 1, we can use a regex and the task is complete. There's no need for unnecessary code to achieve this
   function replaceAll(name: string): string {
     return name.replace(/AE|OE|UE|SS/g, (match) => replacementsBasic[match]);
   }
@@ -55,7 +55,7 @@ export function useEvaluationLogic() {
     }
     return combinedReplaces;
   }
-  //this search the variations but for only 1 key for example: AE, this can be in the GetAllIndexToReplace
+  //this search the variations but for only 1 key for example: AE, this could be in the GetAllIndexToReplace
   // but for me the code is more simple if this is a separated function
   function searchIndexPosibilitiesByKey(key: string, word: string) {
     let indexToReplace: number[] = [];
