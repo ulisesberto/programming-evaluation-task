@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useEvaluationLogic } from "./hooks/use-evaluation-logic";
 
 export function Evaluation() {
@@ -15,6 +15,15 @@ export function Evaluation() {
   const [convertedNamesStep1, setConvertedNamesStep1] = useState<string[]>([]);
   const [allPosibilitiesWord, setAllPosibilitiesWord] = useState<string[]>([]);
   const [sqlStatlement, setSqlStatlement] = useState<string>();
+
+  useEffect(() => {
+    if (
+      allPosibilitiesWord.length > 50000 &&
+      allPosibilitiesWord.length < 70000
+    ) {
+      alert("If you continue like this your PC is going to burn");
+    }
+  }, [allPosibilitiesWord]);
 
   function handleOnClickStep1() {
     setConvertedNamesStep1(replaceAllNames(exampleNames));
@@ -34,7 +43,6 @@ export function Evaluation() {
     if (sqlStatlement)
       navigator.clipboard
         .writeText(sqlStatlement)
-
         .catch((error) => console.error("Error in copy: ", error));
   }
 
@@ -62,10 +70,21 @@ export function Evaluation() {
           }
           placeholder="Write a word to generate variations"
         />
+
         {allPosibilitiesWord.length !== 0 && (
-          <div className="converted-names">
-            {allPosibilitiesWord.join(", ")}
-          </div>
+          <>
+            <p>
+              Number of variations:{" "}
+              {allPosibilitiesWord.length == 1
+                ? allPosibilitiesWord[0] == ""
+                  ? 0
+                  : allPosibilitiesWord.length
+                : allPosibilitiesWord.length}
+            </p>
+            <div className="converted-names">
+              {allPosibilitiesWord.join(", ")}
+            </div>
+          </>
         )}
       </div>
 
